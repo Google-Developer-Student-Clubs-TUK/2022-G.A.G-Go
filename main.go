@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 	model "runner/model"
-	service "runner/service"
+	eclassService "runner/service/eclass"
 
 	"github.com/gin-gonic/gin"
 )
@@ -20,18 +20,18 @@ func main() {
 
 func doLogin(c *gin.Context) {
 	var loginBody model.Login
-
 	// login to json
 	if err := c.BindJSON(&loginBody); err != nil {
 		return
 	}
 
+	cookies := c.Request.Cookies()
+
 	// login to eclassLogin
 	eclassLoginBody := model.EclassLoginBody{Usr_id: loginBody.Id, Usr_pwd: loginBody.Pwd}
-
-	eclassServcie := service.Eclass{}
-	resp := eclassServcie.Login(eclassLoginBody)
-	c.IndentedJSON(http.StatusCreated, resp)
+	eclassServcie := eclassService.Instance(cookies)
+	loginResponse := eclassServcie.Login(eclassLoginBody)
+	c.IndentedJSON(http.StatusCreated, loginResponse)
 }
 
 // func getTimetable(c *gin.Context) {

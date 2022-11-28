@@ -7,7 +7,7 @@ type (
 	}
 
 	EclassLoginBody struct {
-		Usr_id  string
-		Usr_pwd string
+		Usr_id  string `json:"usr_id"`
+		Usr_pwd string `json:"usr_pwd"`
 	}
 )
