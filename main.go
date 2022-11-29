@@ -2,8 +2,9 @@ package main
 
 import (
 	"net/http"
-	model "runner/model"
-	eclassService "runner/service/eclass"
+
+	model "gag.com/v2/model"
+	eclassService "gag.com/v2/service/eclass"
 
 	"github.com/gin-gonic/gin"
 )
