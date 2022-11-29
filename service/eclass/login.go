@@ -4,9 +4,10 @@ import (
 	"io"
 	"log"
 	"net/http"
-	model "runner/model"
-	util "runner/util"
 	"strings"
+
+	model "gag.com/v2/model"
+	util "gag.com/v2/util"
 )
 
 func (eclass *eclass) Login(body model.EclassLoginBody) model.ApiResponse[bool] {
