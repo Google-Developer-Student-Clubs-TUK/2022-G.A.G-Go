@@ -1,0 +1,79 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "api for a gag.com",
+        "title": "gag.com API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "basePath": "/eclass/v1",
+    "paths": {
+        "/eclass/timetable": {
+            "get": {
+                "description": "Get timetable",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "eclass"
+                ],
+                "summary": "Get timetable",
+                "parameters": [
+                    {
+                        "description": "login info",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.ApiResponse-model_Timetable"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.ApiResponse-model_Timetable": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/definitions/model.Timetable"
+                }
+            }
+        },
+        "model.Login": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "pwd": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Timetable": {
+            "type": "object"
+        }
+    }
+}

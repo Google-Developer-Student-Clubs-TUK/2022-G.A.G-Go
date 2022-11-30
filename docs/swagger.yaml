@@ -1,0 +1,51 @@
+basePath: /eclass/v1
+definitions:
+  model.ApiResponse-model_Timetable:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+      result:
+        $ref: '#/definitions/model.Timetable'
+    type: object
+  model.Login:
+    properties:
+      id:
+        type: string
+      pwd:
+        type: string
+    type: object
+  model.Timetable:
+    type: object
+info:
+  contact: {}
+  description: api for a gag.com
+  title: gag.com API
+  version: "1.0"
+paths:
+  /eclass/timetable:
+    get:
+      consumes:
+      - application/json
+      description: Get timetable
+      parameters:
+      - description: login info
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ApiResponse-model_Timetable'
+        "400":
+          description: Bad Request
+      summary: Get timetable
+      tags:
+      - eclass
+swagger: "2.0"
