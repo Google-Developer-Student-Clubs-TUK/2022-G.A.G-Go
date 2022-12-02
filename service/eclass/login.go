@@ -10,19 +10,9 @@ import (
 	util "gag.com/v2/util"
 )
 
-func (eclass *eclass) Login(body model.EclassLoginBody) model.ApiResponse[bool] {
+func (eclass *eclass) Login(body model.LoginBody) model.ApiResponse[bool] {
 	// struct to formdata
-	data, err := util.StructToMap(body)
-	if err != nil {
-		log.Fatal(err.Error())
-		return model.ApiResponse[bool]{
-			Code:   -1,
-			Msg:    "struct to map error",
-			Result: false,
-		}
-	}
-
-	ct, formData, err := util.CreateForm(data)
+	ct, formData, err := util.StructToForm(body)
 	if err != nil {
 		log.Fatal(err.Error())
 		return model.ApiResponse[bool]{
@@ -68,7 +58,6 @@ func (eclass *eclass) Login(body model.EclassLoginBody) model.ApiResponse[bool] 
 
 		// set cookie
 		eclass.cookies = res.Cookies()
-
 		return model.ApiResponse[bool]{
 			Code:   0,
 			Msg:    "로그인 성공",

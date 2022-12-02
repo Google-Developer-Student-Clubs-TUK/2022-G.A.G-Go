@@ -12,9 +12,9 @@ type eclass struct {
 // singleton
 var instance *eclass
 
-func Instance(cookies []*http.Cookie) *eclass {
+func Instance() *eclass {
 	if instance == nil {
-		instance = &eclass{domain: "https://eclass.tukorea.ac.kr", cookies: cookies}
+		instance = &eclass{domain: "https://eclass.tukorea.ac.kr", cookies: nil}
 	}
 	return instance
 }

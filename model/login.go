@@ -2,11 +2,13 @@ package model
 
 type (
 	Login struct {
-		Id  string `json:"id"`
-		Pwd string `json:"pwd"`
+		UUID      string `json:"uuid"`
+		PublicKey string `json:"public_key"`
+		AES       string `json:"aes"`
+		IV        string `json:"iv"`
 	}
 
-	EclassLoginBody struct {
+	LoginBody struct {
 		Usr_id  string `json:"usr_id"`
 		Usr_pwd string `json:"usr_pwd"`
 	}
