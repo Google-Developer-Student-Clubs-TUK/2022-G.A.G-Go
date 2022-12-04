@@ -2,10 +2,9 @@ package model
 
 type (
 	Login struct {
-		UUID      string `json:"uuid"`
-		PublicKey string `json:"public_key"`
-		AES       string `json:"aes"`
-		IV        string `json:"iv"`
+		UUID    string `json:"uuid"`
+		Key     string `json:"key"`
+		AesData string `json:"login_data"`
 	}
 
 	LoginBody struct {

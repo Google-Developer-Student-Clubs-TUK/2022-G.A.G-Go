@@ -34,7 +34,7 @@ func login(c *gin.Context) {
 	rh := util.RSAHelper{}
 	rh.PrivateFromStringPEM(temp.PrivateKey)
 
-	aesData, err := rh.DecryptString(temp.UUID)
+	aesKey, err := rh.DecryptString(login.Key)
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, model.ApiResponse[bool]{
 			Code:   -1,
@@ -42,9 +42,10 @@ func login(c *gin.Context) {
 			Result: false,
 		})
 	}
+	iv := util.PKCS5Padding([]byte(aesKey[0:8]), 16)
 
 	// AES 복호화
-	jsonData := util.AESDecrypt([]byte(aesData), []byte(login.AES), []byte(login.IV))
+	jsonData := util.AESDecrypt([]byte(login.AesData), []byte(aesKey), iv)
 
 	// 로그인
 	var loginBody model.LoginBody
@@ -58,7 +59,7 @@ func login(c *gin.Context) {
 
 	// 로그인 성공시
 	// 성공한 데이터 UserDB에 넣기
-	user := model.UserDB{StudentId: loginBody.Usr_id, PrivateKey: temp.PrivateKey, AES: login.AES}
+	user := model.UserDB{Id: loginBody.Usr_id, PrivateKey: temp.PrivateKey, AesData: login.AesData}
 	db.Create(&user)
 
 	// tempDB 삭제
