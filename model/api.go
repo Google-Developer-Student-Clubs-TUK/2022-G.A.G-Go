@@ -5,3 +5,7 @@ type ApiResponse[T any] struct {
 	Msg    string
 	Result T
 }
+
+type Result struct {
+	Success string
+}

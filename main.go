@@ -36,11 +36,7 @@ func login(c *gin.Context) {
 
 	aesKey, err := rh.DecryptString(login.Key)
 	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, model.ApiResponse[bool]{
-			Code:   -1,
-			Msg:    "rsa 복호화 오류",
-			Result: false,
-		})
+		apiFailure(c, 1)
 	}
 	iv := util.PKCS5Padding([]byte(aesKey[0:8]), 16)
 
@@ -54,7 +50,7 @@ func login(c *gin.Context) {
 	LoginResponse := eclassServcie.Login(loginBody)
 	// 로그인 실패시
 	if LoginResponse.Code != 0 {
-		c.IndentedJSON(http.StatusNotFound, LoginResponse)
+		apiFailure(c, LoginResponse.Code)
 	}
 
 	// 로그인 성공시
@@ -66,11 +62,7 @@ func login(c *gin.Context) {
 	db.Delete(&model.TempDB{}, login.UUID)
 
 	// 성공 메시지 전송
-	c.IndentedJSON(http.StatusCreated, model.ApiResponse[bool]{
-		Code:   0,
-		Msg:    "성공",
-		Result: true,
-	})
+	apiSuccess(c, model.Result{Success: "true"})
 }
 
 // func getTimetable(c *gin.Context) {
@@ -79,7 +71,8 @@ func login(c *gin.Context) {
 // }
 
 func deviceRegister(c *gin.Context) {
-	uuid := c.PostForm("uuid")
+	var device model.Device
+	c.BindJSON(&device)
 
 	// rha 키 생성
 	rh := util.RSAHelper{}
@@ -89,34 +82,46 @@ func deviceRegister(c *gin.Context) {
 	public_key, _ := rh.PublicToStringPEM()
 
 	// db에 rha 키 저장
-	temp := model.TempDB{UUID: uuid, PrivateKey: private_key, PublicKey: public_key}
+	temp := model.TempDB{UUID: device.UUID, PrivateKey: private_key, PublicKey: public_key}
 	db.Create(&temp)
+
+	apiSuccess(c, model.RSA{PublicKey: public_key})
+}
+
+// 상의해보고 사용계획
+func apiSuccess[T any](c *gin.Context, result T) {
+	resultJson, _ := json.Marshal(result)
 
 	response := model.ApiResponse[string]{
 		Code:   0,
-		Msg:    "디바이스 등록 성공",
-		Result: public_key,
+		Msg:    "성공",
+		Result: string(resultJson),
 	}
 
-	c.IndentedJSON(http.StatusCreated, response)
+	c.IndentedJSON(http.StatusOK, response)
 }
 
-// // 상의해보고 사용계획
-// func apiSuccess[T any](c *gin.Context, result T) {
-// 	c.IndentedJSON(http.StatusCreated, model.ApiResponse[T]{
-// 		Code:   0,
-// 		Msg:    "성공",
-// 		Result: result,
-// 	})
-// }
+func apiFailure(c *gin.Context, code int) {
+	response := model.ApiResponse[string]{
+		Code:   code,
+		Msg:    ErrorCodeToMsg(code),
+		Result: "false",
+	}
 
-// func apiFailure(c *gin.Context, code int, msg string) {
-// 	c.IndentedJSON(http.StatusCreated, model.ApiResponse[bool]{
-// 		Code:   code,
-// 		Msg:    msg,
-// 		Result: false,
-// 	})
-// }
-// failure result
-// 1. 백엔드에서 타입에 맞게 임의값 넣기
-// 2. 프론트에서 알아서 처리
+	c.IndentedJSON(http.StatusNotFound, response)
+}
+
+func ErrorCodeToMsg(code int) string {
+	codeMap := map[int]string{
+		1: "error1",
+		2: "error2",
+		3: "error3",
+	}
+
+	errorMessage, exists := codeMap[code]
+	if !exists {
+		return "존재하지 않는 에러코드"
+	}
+
+	return errorMessage
+}
