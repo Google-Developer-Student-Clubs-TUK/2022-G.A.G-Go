@@ -1,0 +1,15 @@
+{
+    "folders": [
+      {
+        "name": "gag",
+        "path": "./gag"
+      },
+      {
+        "name": "goserver",
+        "path": "."
+      }
+    ],
+    "settings": {
+      "css.validate": false
+    }
+  }
