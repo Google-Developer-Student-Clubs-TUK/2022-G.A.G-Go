@@ -1,9 +1,9 @@
 package app
 
 type Success[T any] struct {
-	Code   int
-	Msg    string
-	Result T
+	Code   int    `json:"code"`
+	Msg    string `json:"msg"`
+	Result T      `json:"result"`
 }
 
 func NewSuccess[T any](result T) *Success[T] {
