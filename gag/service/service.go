@@ -4,6 +4,12 @@ import (
 	"gag.com/model"
 )
 
+type testService struct {
+	UserRepository   model.UserRepository
+	DeviceRepository model.DeviceRepository
+	EclassRepository model.EclassRepository
+}
+
 type userService struct {
 	UserRepository   model.UserRepository
 	DeviceRepository model.DeviceRepository

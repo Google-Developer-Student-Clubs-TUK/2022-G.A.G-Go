@@ -3,6 +3,7 @@ package model
 import "context"
 
 type UserService interface {
+	TestLogin(ctx context.Context, key string, u *User) error
 	DeviceRegister(ctx context.Context, uuid string) (*Device, error)
 	Login(ctx context.Context, key string, u *User) error
 }
@@ -19,6 +20,7 @@ type UserRepository interface {
 }
 
 type EclassRepository interface {
+	TestLogin(ctx context.Context, u *User) error
 	Login(ctx context.Context, key string, u *User) error
 	GetUser(ctx context.Context, u *User) error
 }

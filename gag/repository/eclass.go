@@ -19,6 +19,21 @@ func NewEclassRepository(c *eclass.Eclass) model.EclassRepository {
 	}
 }
 
+func (r eclassRepository) TestLogin(ctx context.Context, u *model.User) error {
+	// 로그인
+	password := u.AesPassword
+	body := &eclassModel.LoginBody{
+		Usr_id:  u.ID,
+		Usr_pwd: password,
+	}
+	err := r.Eclass.Login(ctx, body)
+	if err != nil {
+		return err
+	}
+
+	return err
+}
+
 func (r eclassRepository) Login(ctx context.Context, key string, u *model.User) error {
 	// RSA 복호화
 	rh := util.RSAHelper{}
