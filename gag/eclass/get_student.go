@@ -11,9 +11,18 @@ import (
 )
 
 func (e *Eclass) GetStudent(ctx context.Context) (*model.Student, error) {
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", "https://eclass.tukorea.ac.kr/ilos/mp/myinfo_form.acl", nil)
+	if err != nil {
+		return nil, err
+	}
+	for _, cookie := range e.cookies {
+		req.AddCookie(cookie)
+	}
+	res, err := client.Do(req)
 	student := &model.Student{}
-	// request
-	res, err := http.Get("https://eclass.tukorea.ac.kr/ilos/mp/myinfo_form.acl")
+
 	if err != nil {
 		return student, err
 	}
