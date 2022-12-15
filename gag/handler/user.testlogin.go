@@ -31,9 +31,11 @@ func (h *Handler) TestLogin(c *gin.Context) {
 	}
 
 	res := app.NewSuccess(loginRes{
+		Id:       user.ID,
 		Name:     user.Name,
 		Email:    user.Email,
 		ImageURL: user.ImageURL,
+		Major:    "컴퓨터공학과",
 	})
 
 	c.IndentedJSON(http.StatusOK, res)

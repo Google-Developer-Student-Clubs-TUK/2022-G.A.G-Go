@@ -17,8 +17,10 @@ type loginReq struct {
 }
 
 type loginRes struct {
+	Id       string `json:"id"`
 	Name     string `json:"name"`
 	Email    string `json:"email"`
+	Major    string `json:"major"`
 	ImageURL string `json:"image_url"`
 }
 
@@ -44,9 +46,11 @@ func (h *Handler) Login(c *gin.Context) {
 	}
 
 	res := app.NewSuccess(loginRes{
+		Id:       user.ID,
 		Name:     user.Name,
 		Email:    user.Email,
 		ImageURL: user.ImageURL,
+		Major:    "컴퓨터공학과",
 	})
 
 	c.IndentedJSON(http.StatusOK, res)
