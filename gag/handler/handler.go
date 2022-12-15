@@ -29,6 +29,7 @@ func NewHandler(c *Config) {
 			userGroup.POST("/login", h.Login)
 			userGroup.POST("/testlogin", h.TestLogin)
 			userGroup.POST("/register", h.DeviceRegister)
+			userGroup.POST("/subjects", h.GetSubjects)
 		}
 	}
 }

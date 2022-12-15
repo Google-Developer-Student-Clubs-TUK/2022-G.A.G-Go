@@ -74,3 +74,14 @@ func (r eclassRepository) GetUser(ctx context.Context, u *model.User) error {
 
 	return err
 }
+
+func (r eclassRepository) GetSubjects(ctx context.Context, u *model.User, s []model.Subject) ([]model.Subject, error) {
+
+	subjects, err := r.Eclass.GetSubjects(ctx)
+	if err != nil {
+		return s, err
+	}
+
+	return append(s, subjects...), err
+
+}
