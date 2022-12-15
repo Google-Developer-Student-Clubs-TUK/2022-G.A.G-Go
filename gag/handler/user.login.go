@@ -10,10 +10,10 @@ import (
 )
 
 type loginReq struct {
-	UUID     string `json:"uuid" binding: "required,uuid"`
-	Key      string `json:"key" binding: "required,key"`
-	ID       string `json:"id" binding: "required,id"`
-	Password string `json:"password" binding: "required,password"`
+	UUID     string `json:"uuid" form:"uuid" binding: "required,uuid"`
+	Key      string `json:"key" form:"key" binding: "required,key"`
+	ID       string `json:"id" form:"id" binding: "required,id"`
+	Password string `json:"password" form:"password" binding: "required,password"`
 }
 
 type loginRes struct {
