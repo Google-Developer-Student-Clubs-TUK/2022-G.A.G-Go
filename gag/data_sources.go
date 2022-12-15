@@ -16,7 +16,7 @@ type dataSources struct {
 
 func initDS() (*dataSources, error) {
 	// gorm 설정
-	dsn := "root:root@tcp(127.0.0.1:3306)/gag?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "root:root@tcp(mysql-gag:3306)/gag?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return nil, fmt.Errorf("error opening db: %w", err)
