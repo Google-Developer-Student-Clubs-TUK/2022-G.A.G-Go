@@ -9,7 +9,7 @@ type Success[T any] struct {
 func NewSuccess[T any](result T) *Success[T] {
 
 	return &Success[T]{
-		Code:   0,
+		Code:   1,
 		Msg:    "성공",
 		Result: result,
 	}
