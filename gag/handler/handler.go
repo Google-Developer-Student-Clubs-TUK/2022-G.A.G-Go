@@ -27,6 +27,7 @@ func NewHandler(c *Config) {
 		userGroup := v1.Group("/users")
 		{
 			userGroup.POST("/login", h.Login)
+			userGroup.POST("/testlogin", h.TestLogin)
 			userGroup.POST("/register", h.DeviceRegister)
 		}
 	}
