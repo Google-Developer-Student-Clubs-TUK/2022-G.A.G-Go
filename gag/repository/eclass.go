@@ -85,3 +85,14 @@ func (r eclassRepository) GetSubjects(ctx context.Context, u *model.User, s []mo
 	return append(s, subjects...), err
 
 }
+
+func (r eclassRepository) GetTodos(ctx context.Context, u *model.User) ([]model.Todo, error) {
+
+	todos, err := r.Eclass.GetTodos(ctx)
+	if err != nil {
+		return todos, err
+	}
+
+	return todos, err
+
+}

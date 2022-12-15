@@ -32,6 +32,7 @@ func NewHandler(c *Config) {
 			userGroup.POST("/subjects", h.GetSubjects)
 			userGroup.PUT("/alarm", h.SetAlarm)
 			userGroup.PUT("/profile/visibility", h.SetProfileVisibility)
+			userGroup.POST("/todos", h.GetTodos)
 		}
 	}
 }

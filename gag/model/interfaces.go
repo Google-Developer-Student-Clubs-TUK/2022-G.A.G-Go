@@ -7,6 +7,7 @@ type UserService interface {
 	DeviceRegister(ctx context.Context, uuid string) (*Device, error)
 	Login(ctx context.Context, key string, u *User) error
 	GetSubjects(ctx context.Context, key string, u *User, s []Subject) ([]Subject, error)
+	GetTodos(ctx context.Context, key string, u *User) ([]Todo, error)
 	SetProfileVisibility(ctx context.Context, key string, u *User) error
 	SetAlarm(ctx context.Context, key string, u *User) error
 }
@@ -30,4 +31,5 @@ type EclassRepository interface {
 	Login(ctx context.Context, key string, u *User) error
 	GetUser(ctx context.Context, u *User) error
 	GetSubjects(ctx context.Context, u *User, s []Subject) ([]Subject, error)
+	GetTodos(ctx context.Context, u *User) ([]Todo, error)
 }

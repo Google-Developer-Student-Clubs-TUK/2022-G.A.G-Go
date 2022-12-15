@@ -27,8 +27,7 @@ func (h *Handler) GetSubjects(c *gin.Context) {
 	}
 
 	user := &model.User{
-		ID:            req.ID,
-		RsaPrivateKey: req.Key,
+		ID: req.ID,
 	}
 
 	subects := make([]model.Subject, 0)
