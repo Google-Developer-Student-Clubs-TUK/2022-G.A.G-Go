@@ -9,7 +9,7 @@ import (
 )
 
 type deviceRegisterReq struct {
-	UUID string `json:"uuid" binding: "required,uuid"`
+	UUID string `json:"uuid" form:"uuid" binding: "required,uuid"`
 }
 
 type deviceRegisterRes struct {
