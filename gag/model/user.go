@@ -13,10 +13,12 @@ type (
 		AesPassword   string `gorm:"not null" json:"aes_password"`
 
 		// 개인 정보
-		Name     string `gorm:"not null" json:"name"`
-		Email    string `gorm:"not null" json:"email"`
-		ImageURL string `gorm:"not null" json:"image_url"`
-		Cookie   string `gorm:"not null" json:"cookie"`
+		Name             string `gorm:"not null" json:"name"`
+		Email            string `gorm:"not null" json:"email"`
+		ImageURL         string `gorm:"not null" json:"image_url"`
+		Cookie           string `gorm:"not null" json:"cookie"`
+		IsAlarm          bool   `gorm:"default:false" json:"is_alarm"`
+		IsProfileVisible bool   `gorm:"default:false" json:"is_profile_visible"`
 
 		// timestamp
 		CreatedAt time.Time `gorm:"not null" json:"created_at"`

@@ -27,3 +27,15 @@ func (r UserRepository) FindByID(ctx context.Context, id string) (*model.User, e
 	r.DB.First(user, "id = ?", id)
 	return user, nil
 }
+
+func (r UserRepository) SetProfileVisibility(ctx context.Context, u *model.User) error {
+	u.IsProfileVisible = !u.IsProfileVisible
+	r.DB.Where("id = ?", u.ID).Update("is_profile_visible", u.IsProfileVisible)
+	return nil
+}
+
+func (r UserRepository) SetAlarm(ctx context.Context, u *model.User) error {
+	u.IsAlarm = !u.IsAlarm
+	r.DB.Table("users").Where("id = ?", u.ID).Update("is_alarm", u.IsAlarm)
+	return nil
+}

@@ -7,6 +7,8 @@ type UserService interface {
 	DeviceRegister(ctx context.Context, uuid string) (*Device, error)
 	Login(ctx context.Context, key string, u *User) error
 	GetSubjects(ctx context.Context, key string, u *User, s []Subject) ([]Subject, error)
+	SetProfileVisibility(ctx context.Context, key string, u *User) error
+	SetAlarm(ctx context.Context, key string, u *User) error
 }
 
 // repository layer
@@ -19,6 +21,8 @@ type DeviceRepository interface {
 type UserRepository interface {
 	Create(ctx context.Context, u *User) error
 	FindByID(ctx context.Context, id string) (*User, error)
+	SetProfileVisibility(ctx context.Context, u *User) error
+	SetAlarm(ctx context.Context, u *User) error
 }
 
 type EclassRepository interface {

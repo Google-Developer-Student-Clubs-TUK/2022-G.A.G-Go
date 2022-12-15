@@ -7,6 +7,7 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gag
   reverse-proxy:
     # The official v2 Traefik docker image
     image: traefik:v2.2
@@ -32,7 +33,7 @@ services:
       - "8080"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.gag.rule=Host(`gag.com`) && PathPrefix(`/v1`)"
+      - "traefik.http.routers.gag.rule=PathPrefix(`/v1`)"
     environment:
       - ENV=dev
     volumes:
