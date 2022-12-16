@@ -44,7 +44,7 @@ func (r eclassRepository) Login(ctx context.Context, key string, u *model.User) 
 		return err
 	}
 
-	iv := util.PKCS5Padding([]byte(aesKey[0:8]), 16)
+	iv := []byte(aesKey[0:16])
 	password := util.AESDecrypt([]byte(u.AesPassword), []byte(aesKey), iv)
 
 	body := &eclassModel.LoginBody{
