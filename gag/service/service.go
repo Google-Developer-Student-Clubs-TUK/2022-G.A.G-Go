@@ -8,6 +8,7 @@ type testService struct {
 	UserRepository   model.UserRepository
 	DeviceRepository model.DeviceRepository
 	EclassRepository model.EclassRepository
+	PostRepository   model.PostRepository
 }
 
 type userService struct {
@@ -16,10 +17,18 @@ type userService struct {
 	EclassRepository model.EclassRepository
 }
 
+type subjectService struct {
+	PostRepository model.PostRepository
+}
+
 type USConfig struct {
 	UserRepository   model.UserRepository
 	DeviceRepository model.DeviceRepository
 	EclassRepository model.EclassRepository
+}
+
+type SSConfig struct {
+	PostRepository model.PostRepository
 }
 
 func NewUserService(c *USConfig) model.UserService {
@@ -27,5 +36,11 @@ func NewUserService(c *USConfig) model.UserService {
 		UserRepository:   c.UserRepository,
 		DeviceRepository: c.DeviceRepository,
 		EclassRepository: c.EclassRepository,
+	}
+}
+
+func NewSubjectService(c *SSConfig) model.SubjectService {
+	return &subjectService{
+		PostRepository: c.PostRepository,
 	}
 }

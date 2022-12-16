@@ -12,6 +12,11 @@ type UserService interface {
 	SetAlarm(ctx context.Context, key string, u *User) error
 }
 
+type SubjectService interface {
+	GetPosts(ctx context.Context, subjectId string, paging Paging) ([]Post, error)
+	RegisterPost(ctx context.Context, post *Post) error
+}
+
 // repository layer
 type DeviceRepository interface {
 	FindByID(ctx context.Context, uuid string) (*Device, error)
@@ -24,6 +29,11 @@ type UserRepository interface {
 	FindByID(ctx context.Context, id string) (*User, error)
 	SetProfileVisibility(ctx context.Context, u *User) error
 	SetAlarm(ctx context.Context, u *User) error
+}
+
+type PostRepository interface {
+	Create(ctx context.Context, p *Post) error
+	FindBySubjectId(ctx context.Context, subjectId string, paging Paging) ([]Post, error)
 }
 
 type EclassRepository interface {
