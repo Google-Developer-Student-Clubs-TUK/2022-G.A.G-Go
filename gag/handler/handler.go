@@ -36,6 +36,7 @@ func NewHandler(c *Config) {
 			userGroup.PUT("/profile/alarm", h.SetAlarm)
 			userGroup.PUT("/profile/visibility", h.SetProfileVisibility)
 			userGroup.POST("/todos", h.GetTodos)
+			userGroup.POST("/profile", h.GetProfile)
 		}
 		subjectGroup := v1.Group("/subject")
 		{

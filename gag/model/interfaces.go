@@ -10,6 +10,7 @@ type UserService interface {
 	GetTodos(ctx context.Context, key string, u *User) ([]Todo, error)
 	SetProfileVisibility(ctx context.Context, key string, u *User) error
 	SetAlarm(ctx context.Context, key string, u *User) error
+	GetProfile(ctx context.Context, key string, u *User) error
 }
 
 type SubjectService interface {
