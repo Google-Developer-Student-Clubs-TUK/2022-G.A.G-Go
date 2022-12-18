@@ -10,6 +10,7 @@ type UserService interface {
 	GetTodos(ctx context.Context, key string, u *User) ([]Todo, error)
 	SetProfileVisibility(ctx context.Context, key string, u *User) error
 	SetAlarm(ctx context.Context, key string, u *User) error
+	SetToken(ctx context.Context, key string, u *User) error
 	GetProfile(ctx context.Context, key string, u *User) error
 }
 
@@ -30,6 +31,7 @@ type UserRepository interface {
 	FindByID(ctx context.Context, id string) (*User, error)
 	SetProfileVisibility(ctx context.Context, u *User) error
 	SetAlarm(ctx context.Context, u *User) error
+	SetToken(ctx context.Context, u *User) error
 }
 
 type PostRepository interface {

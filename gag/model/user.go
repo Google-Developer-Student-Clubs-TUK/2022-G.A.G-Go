@@ -19,6 +19,7 @@ type (
 		Cookie           string `gorm:"not null" json:"cookie"`
 		IsAlarm          bool   `gorm:"default:false" json:"is_alarm"`
 		IsProfileVisible bool   `gorm:"default:false" json:"is_profile_visible"`
+		Token            string `gorm:"default:null" json:"token"`
 
 		// timestamp
 		CreatedAt time.Time `gorm:"not null" json:"created_at"`

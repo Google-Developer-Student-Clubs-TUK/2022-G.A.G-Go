@@ -39,3 +39,8 @@ func (r UserRepository) SetAlarm(ctx context.Context, u *model.User) error {
 	r.DB.Table("users").Where("id = ?", u.ID).Update("is_alarm", u.IsAlarm)
 	return nil
 }
+
+func (r UserRepository) SetToken(ctx context.Context, u *model.User) error {
+	r.DB.Table("users").Where("id = ?", u.ID).Update("token", u.Token)
+	return nil
+}
