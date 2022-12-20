@@ -39,3 +39,15 @@ func (r PostRepository) FindBySubjectId(ctx context.Context, subjectId string, p
 
 	return posts, nil
 }
+
+func (r PostRepository) Update(ctx context.Context, p *model.Post) error {
+	nowPost := &model.Post{}
+	r.DB.First(nowPost, "id = ?", p.ID)
+	r.DB.Model(nowPost).Updates(p)
+	return nil
+}
+
+func (r PostRepository) Delete(ctx context.Context, pid uint) error {
+	r.DB.Delete(pid)
+	return nil
+}

@@ -17,6 +17,8 @@ type UserService interface {
 type SubjectService interface {
 	GetPosts(ctx context.Context, subjectId string, paging Paging) ([]Post, error)
 	RegisterPost(ctx context.Context, post *Post) error
+	EditPost(ctx context.Context, post *Post) error
+	DeletePost(ctx context.Context, pid uint) error
 }
 
 // repository layer
@@ -37,6 +39,8 @@ type UserRepository interface {
 type PostRepository interface {
 	Create(ctx context.Context, p *Post) error
 	FindBySubjectId(ctx context.Context, subjectId string, paging Paging) ([]Post, error)
+	Update(ctx context.Context, p *Post) error
+	Delete(ctx context.Context, pid uint) error
 }
 
 type EclassRepository interface {
