@@ -10,14 +10,14 @@ import (
 )
 
 type registerPostReq struct {
-	ID        string `json:"id" form:"id" binding: "required,id"`
-	SubjectId string `json:"subject_id" form:"subject_id" binding: "required,subject_id"`
-	Title     string `json:"title" form:"title" binding: "required,title"`
-	Content   string `json:"content" form:"content" binding: "required,content"`
+	id      string `json:"id" form:"id" binding: "required,id"`
+	sid     string `json:"sid" form:"sid" binding: "required,sid"`
+	title   string `json:"title" form:"title" binding: "required,title"`
+	content string `json:"content" form:"content" binding: "required,content"`
 }
 
 type registerPostRes struct {
-	ID uint `json:"id" form:"id" binding: "required,id"`
+	id uint `json:"id" form:"id" binding: "required,id"`
 }
 
 func (h *Handler) RegisterPost(c *gin.Context) {
@@ -27,10 +27,10 @@ func (h *Handler) RegisterPost(c *gin.Context) {
 	}
 
 	post := &model.Post{
-		Writer:  req.ID,
-		SID:     req.SubjectId,
-		Title:   req.Title,
-		Content: req.Content,
+		Writer:  req.id,
+		SID:     req.sid,
+		Title:   req.title,
+		Content: req.content,
 	}
 
 	err := h.SubjectService.RegisterPost(c, post)
@@ -43,7 +43,7 @@ func (h *Handler) RegisterPost(c *gin.Context) {
 	}
 
 	res := app.NewSuccess(registerPostRes{
-		ID: post.ID,
+		id: post.ID,
 	})
 
 	c.IndentedJSON(http.StatusOK, res)

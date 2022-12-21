@@ -24,7 +24,6 @@ func (r PostRepository) Create(ctx context.Context, p *model.Post) error {
 
 func (r PostRepository) FindBySubjectId(ctx context.Context, subjectId string, pagination model.Pagination) ([]model.Post, error) {
 	posts := make([]model.Post, 0)
-	r.DB.Where("sid = ?", subjectId).Find(posts)
 
 	offset := pagination.Page * pagination.PerPage
 

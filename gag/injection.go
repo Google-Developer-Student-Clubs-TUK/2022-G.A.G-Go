@@ -18,6 +18,8 @@ func inject(d *dataSources) (*gin.Engine, error) {
 	userRepository := repository.NewUserRepository(d.DB)
 	deviceRepository := repository.NewDeviceRepository(d.DB)
 	eclassRepository := repository.NewEclassRepository(d.Eclass)
+	postRepository := repository.NewPostRepository(d.DB)
+	commentRepository := repository.NewCommentRepository(d.DB)
 
 	/*
 	 * service layer
@@ -27,12 +29,17 @@ func inject(d *dataSources) (*gin.Engine, error) {
 		DeviceRepository: deviceRepository,
 		EclassRepository: eclassRepository,
 	})
+	subjectService := service.NewSubjectService(&service.SSConfig{
+		PostRepository:    postRepository,
+		CommentRepository: commentRepository,
+	})
 
 	router := gin.Default()
 
 	handler.NewHandler(&handler.Config{
-		R:           router,
-		UserService: userService,
+		R:              router,
+		UserService:    userService,
+		SubjectService: subjectService,
 	})
 
 	return router, nil

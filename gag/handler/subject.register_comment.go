@@ -16,7 +16,7 @@ type registerCommentReq struct {
 }
 
 type registerCommentRes struct {
-	cid uint `json:"cid" form:"cid" binding: "required,cid"`
+	id uint `json:"cid" form:"cid" binding: "required,cid"`
 }
 
 func (h *Handler) RegisterComment(c *gin.Context) {
@@ -26,8 +26,8 @@ func (h *Handler) RegisterComment(c *gin.Context) {
 	}
 
 	comment := &model.Comment{
-		Writer:  req.ID,
-		Content: req.Content,
+		Writer:  req.uid,
+		Content: req.content,
 	}
 
 	err := h.SubjectService.RegisterComment(c, comment)
@@ -40,7 +40,7 @@ func (h *Handler) RegisterComment(c *gin.Context) {
 	}
 
 	res := app.NewSuccess(registerCommentRes{
-		ID: comment.ID,
+		id: comment.ID,
 	})
 
 	c.IndentedJSON(http.StatusOK, res)

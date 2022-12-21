@@ -19,6 +19,10 @@ type SubjectService interface {
 	RegisterPost(ctx context.Context, post *Post) error
 	EditPost(ctx context.Context, post *Post) error
 	DeletePost(ctx context.Context, pid uint) error
+	GetComments(ctx context.Context, pid uint) ([]Comment, error)
+	RegisterComment(ctx context.Context, comment *Comment) error
+	EditComment(ctx context.Context, comment *Comment) error
+	DeleteComment(ctx context.Context, cid uint) error
 }
 
 // repository layer
@@ -40,6 +44,13 @@ type PostRepository interface {
 	Create(ctx context.Context, p *Post) error
 	FindBySubjectId(ctx context.Context, subjectId string, pagination Pagination) ([]Post, error)
 	Update(ctx context.Context, p *Post) error
+	Delete(ctx context.Context, pid uint) error
+}
+
+type CommentRepository interface {
+	Create(ctx context.Context, p *Comment) error
+	FindByPid(ctx context.Context, pid uint) ([]Comment, error)
+	Update(ctx context.Context, p *Comment) error
 	Delete(ctx context.Context, pid uint) error
 }
 

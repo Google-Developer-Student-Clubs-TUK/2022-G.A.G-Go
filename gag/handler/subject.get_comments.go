@@ -3,6 +3,7 @@ package handler
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"gag.com/model"
 	"gag.com/model/app"
@@ -28,7 +29,12 @@ func (h *Handler) GetComments(c *gin.Context) {
 		req.pagination.PerPage = 10
 	}
 
-	comments, err := h.SubjectService.GetComments(c, req.pid, req.pagination)
+	pid, err := strconv.ParseUint(req.pid, 10, 32)
+	if err != nil {
+		return
+	}
+
+	comments, err := h.SubjectService.GetComments(c, uint(pid))
 	if err != nil {
 		log.Printf("Failed to sign up user: %v\n", err.Error())
 		c.JSON(app.Status(err), gin.H{

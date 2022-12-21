@@ -18,7 +18,8 @@ type userService struct {
 }
 
 type subjectService struct {
-	PostRepository model.PostRepository
+	PostRepository    model.PostRepository
+	CommentRepository model.CommentRepository
 }
 
 type USConfig struct {
@@ -28,7 +29,8 @@ type USConfig struct {
 }
 
 type SSConfig struct {
-	PostRepository model.PostRepository
+	PostRepository    model.PostRepository
+	CommentRepository model.CommentRepository
 }
 
 func NewUserService(c *USConfig) model.UserService {
@@ -41,6 +43,7 @@ func NewUserService(c *USConfig) model.UserService {
 
 func NewSubjectService(c *SSConfig) model.SubjectService {
 	return &subjectService{
-		PostRepository: c.PostRepository,
+		PostRepository:    c.PostRepository,
+		CommentRepository: c.CommentRepository,
 	}
 }
