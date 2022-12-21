@@ -45,7 +45,11 @@ func (r eclassRepository) Login(ctx context.Context, key string, u *model.User) 
 	}
 
 	iv := []byte(aesKey[0:16])
-	password := util.AESDecrypt([]byte(u.AesPassword), []byte(aesKey), iv)
+
+	password, err := util.AESDecrypt(u.AesPassword, []byte(aesKey), iv)
+	if err != nil {
+		return err
+	}
 
 	body := &eclassModel.LoginBody{
 		Usr_id:  u.ID,

@@ -26,13 +26,14 @@ func (s *userService) Login(ctx context.Context, key string, u *model.User) erro
 
 	iv := []byte(aesKey[0:16])
 	// AES 복호화
-	id := util.AESDecrypt([]byte(u.ID), []byte(aesKey), iv)
+	id, err := util.AESDecrypt(u.ID, []byte(aesKey), iv)
+	if err != nil {
+		return err
+	}
 	// ------- id가 암호화 되어 있지 않다면 불필요 코드 -----
 
-	u = &model.User{
-		ID:            string(id),
-		RsaPrivateKey: rsaPrivateKey,
-	}
+	u.ID = id
+	u.RsaPrivateKey = rsaPrivateKey
 
 	// eclass login
 	err = s.EclassRepository.Login(ctx, key, u)

@@ -54,7 +54,7 @@ func (r *RSAHelper) PrivateToBytePEM() ([]byte, error) {
 		return nil, errors.New("private rsa key is nil")
 	}
 
-	privateKeyBytes := x509.MarshalPKCS1PrivateKey(r.PriKey)
+	privateKeyBytes, _ := x509.MarshalPKCS8PrivateKey(r.PriKey)
 	privateKeyPEM := pem.EncodeToMemory(
 		&pem.Block{
 			Type:  "RSA PRIVATE KEY",
@@ -85,14 +85,14 @@ func (r *RSAHelper) PrivateFromBytePEM(privateKeyPEM []byte) error {
 		return errors.New("invalid PEM Block(private key)")
 	}
 
-	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	privateKey, err := x509.ParsePKCS8PrivateKey(block.Bytes)
 
 	if err != nil {
 		r.PriKey = nil
 		return err
 	}
 
-	r.PriKey = privateKey
+	r.PriKey = privateKey.(*rsa.PrivateKey)
 	return nil
 }
 
@@ -163,7 +163,7 @@ func (r *RSAHelper) PublicFromBytePEM(publicKeyPEM []byte) error {
 	}
 }
 
-func (r *RSAHelper) PublicFromStringPEM(publicKeyPEM []byte) error {
+func (r *RSAHelper) PublicFromStringPEM(publicKeyPEM string) error {
 	return r.PublicFromBytePEM([]byte(publicKeyPEM))
 }
 
