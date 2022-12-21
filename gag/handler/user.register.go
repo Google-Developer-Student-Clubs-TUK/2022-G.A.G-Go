@@ -13,7 +13,7 @@ type deviceRegisterReq struct {
 }
 
 type deviceRegisterRes struct {
-	PublicKey string `json:"public_key"`
+	PublicKey string `json:"publicKey"`
 }
 
 func (h *Handler) DeviceRegister(c *gin.Context) {
