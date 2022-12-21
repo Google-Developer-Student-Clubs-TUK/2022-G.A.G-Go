@@ -46,6 +46,10 @@ func NewHandler(c *Config) {
 			subjectGroup.POST("/posts", h.RegisterPost)
 			subjectGroup.PUT("/posts", h.EditPost)
 			subjectGroup.DELETE("/posts", h.DeletePost)
+			subjectGroup.GET("/comments", h.GetComments)
+			subjectGroup.POST("/comments", h.RegisterComment)
+			subjectGroup.PUT("/comments", h.EditComment)
+			subjectGroup.DELETE("/comments", h.DeleteComment)
 		}
 	}
 }

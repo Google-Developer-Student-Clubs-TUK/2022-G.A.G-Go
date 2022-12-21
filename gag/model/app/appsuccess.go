@@ -19,19 +19,19 @@ func NewSuccess[T any](result T) *Success[T] {
 	}
 }
 
-type SuccessPaging[T any] struct {
-	Code   int          `json:"code"`
-	Msg    string       `json:"msg"`
-	Result T            `json:"result"`
-	Paging model.Paging `json:"paging"`
+type SuccessPagination[T any] struct {
+	Code       int              `json:"code"`
+	Msg        string           `json:"msg"`
+	Result     T                `json:"result"`
+	Pagination model.Pagination `json:"pagination"`
 }
 
-func NewSuccessPaging[T any](result T, paging model.Paging) *SuccessPaging[T] {
+func NewSuccessPagination[T any](result T, pagination model.Pagination) *SuccessPagination[T] {
 
-	return &SuccessPaging[T]{
-		Code:   1,
-		Msg:    "성공",
-		Result: result,
-		Paging: paging,
+	return &SuccessPagination[T]{
+		Code:       1,
+		Msg:        "성공",
+		Result:     result,
+		Pagination: pagination,
 	}
 }

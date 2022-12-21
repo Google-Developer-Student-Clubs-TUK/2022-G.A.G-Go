@@ -17,8 +17,8 @@ func (s *subjectService) RegisterPost(ctx context.Context, post *model.Post) err
 	return nil
 }
 
-func (s *subjectService) GetPosts(ctx context.Context, subjectId string, paging model.Paging) ([]model.Post, error) {
-	posts, err := s.PostRepository.FindBySubjectId(ctx, subjectId, paging)
+func (s *subjectService) GetPosts(ctx context.Context, subjectId string, pagination model.Pagination) ([]model.Post, error) {
+	posts, err := s.PostRepository.FindBySubjectId(ctx, subjectId, pagination)
 	if err != nil {
 		return nil, err
 	}

@@ -1,8 +1,8 @@
 package model
 
 type (
-	Paging struct {
+	Pagination struct {
 		Page    int `json:"page"`
-		PerPage int `json:"per_page"`
+		PerPage int `json:"perPage"`
 	}
 )

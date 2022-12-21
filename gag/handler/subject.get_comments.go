@@ -9,17 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type getPostsReq struct {
-	sid        string           `json:"sid"`
+type getCommentsReq struct {
+	pid        string           `json:"pid"`
 	pagination model.Pagination `json:"pagination"`
 }
 
-type getPostsRes struct {
-	Posts []model.Post `json:"posts"`
+type getCommentsRes struct {
+	Comments []model.Comment `json:"comments"`
 }
 
-func (h *Handler) GetPosts(c *gin.Context) {
-	var req getPostsReq
+func (h *Handler) GetComments(c *gin.Context) {
+	var req getCommentsReq
 	if ok := bindData(c, &req); !ok {
 		return
 	}
@@ -28,7 +28,7 @@ func (h *Handler) GetPosts(c *gin.Context) {
 		req.pagination.PerPage = 10
 	}
 
-	posts, err := h.SubjectService.GetPosts(c, req.sid, req.pagination)
+	comments, err := h.SubjectService.GetComments(c, req.pid, req.pagination)
 	if err != nil {
 		log.Printf("Failed to sign up user: %v\n", err.Error())
 		c.JSON(app.Status(err), gin.H{
@@ -37,7 +37,7 @@ func (h *Handler) GetPosts(c *gin.Context) {
 		return
 	}
 
-	res := app.NewSuccessPagination(posts, req.pagination)
+	res := app.NewSuccessPagination(comments, req.pagination)
 
 	c.IndentedJSON(http.StatusOK, res)
 }

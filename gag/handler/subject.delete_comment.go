@@ -8,22 +8,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type deletePostReq struct {
-	pid string `json:"pid" form:"pid" binding: "required,pid"`
+type deleteCommentReq struct {
+	cid string `json:"cid" form:"cid" binding: "required,cid"`
 }
 
-func (h *Handler) DeletePost(c *gin.Context) {
-	var req deletePostReq
+func (h *Handler) DeleteComment(c *gin.Context) {
+	var req deleteCommentReq
 	if ok := bindData(c, &req); !ok {
 		return
 	}
 
-	pid, err := strconv.ParseUint(req.pid, 10, 32)
+	cid, err := strconv.ParseUint(req.cid, 10, 32)
 	if err != nil {
 		return
 	}
 
-	err = h.SubjectService.DeletePost(c, uint(pid))
+	err = h.SubjectService.DeleteComment(c, uint(cid))
 	if err != nil {
 		c.JSON(app.Status(err), gin.H{
 			"error": err,

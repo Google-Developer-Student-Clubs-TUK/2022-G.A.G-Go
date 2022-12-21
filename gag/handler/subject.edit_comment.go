@@ -9,34 +9,33 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type editPostReq struct {
-	pid     string `json:"pid" form:"pid" binding: "required,pid"`
+type editCommentReq struct {
+	cid     string `json:"cid" form:"cid" binding: "required,cid"`
 	title   string `json:"title" form:"title" binding: "required,title"`
 	content string `json:"content" form:"content" binding: "required,content"`
 }
 
-type eidtPostRes struct {
-	pid string `json:"pid" form:"pid"`
+type eidtCommentRes struct {
+	cid string `json:"cid" form:"cid"`
 }
 
-func (h *Handler) EditPost(c *gin.Context) {
-	var req editPostReq
+func (h *Handler) EditComment(c *gin.Context) {
+	var req editCommentReq
 	if ok := bindData(c, &req); !ok {
 		return
 	}
 
-	pid, err := strconv.ParseUint(req.pid, 10, 32)
+	pid, err := strconv.ParseUint(req.cid, 10, 32)
 	if err != nil {
 		return
 	}
 
-	post := &model.Post{
-		Title:   req.title,
+	comment := &model.Comment{
 		Content: req.content,
 	}
-	post.ID = uint(pid)
+	comment.ID = uint(pid)
 
-	err = h.SubjectService.EditPost(c, post)
+	err = h.SubjectService.EditComment(c, comment)
 	if err != nil {
 		c.JSON(app.Status(err), gin.H{
 			"error": err,
@@ -44,8 +43,8 @@ func (h *Handler) EditPost(c *gin.Context) {
 		return
 	}
 
-	res := app.NewSuccess(eidtPostRes{
-		pid: req.pid,
+	res := app.NewSuccess(eidtCommentRes{
+		cid: req.cid,
 	})
 
 	c.IndentedJSON(http.StatusOK, res)
