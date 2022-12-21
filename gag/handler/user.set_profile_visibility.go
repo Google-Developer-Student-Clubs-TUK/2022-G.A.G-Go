@@ -30,11 +30,14 @@ func (h *Handler) SetProfileVisibility(c *gin.Context) {
 		return
 	}
 
-	res := app.NewSuccess(loginRes{
-		Name:     user.Name,
-		Email:    user.Email,
-		ImageURL: user.ImageURL,
-	})
+	result := true
+	if req.Current {
+		result = false
+	}
+
+	res := app.NewSuccess(
+		result,
+	)
 
 	c.IndentedJSON(http.StatusOK, res)
 }

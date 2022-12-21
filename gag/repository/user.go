@@ -30,7 +30,7 @@ func (r UserRepository) FindByID(ctx context.Context, id string) (*model.User, e
 
 func (r UserRepository) SetProfileVisibility(ctx context.Context, u *model.User) error {
 	u.IsProfileVisible = !u.IsProfileVisible
-	r.DB.Where("id = ?", u.ID).Update("is_profile_visible", u.IsProfileVisible)
+	r.DB.Table("users").Where("id = ?", u.ID).Update("is_profile_visible", u.IsProfileVisible)
 	return nil
 }
 
