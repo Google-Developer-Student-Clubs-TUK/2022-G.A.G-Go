@@ -51,6 +51,11 @@ func (e *Eclass) GetTodos(ctx context.Context) ([]m.Todo, error) {
 			deadLineSplit := strings.IndexAny(tmpDeadline, "1234567890")
 			deadLine := tmpDeadline[deadLineSplit:]
 			if splitStart != -1 && splitEnd != -1 {
+				tmpDeadline := strings.ReplaceAll(strings.Trim(deadLine, (" \n\t")), ("\n                  "), " ")
+				dateParseIndex := strings.LastIndex(tmpDeadline, "(")
+				timeParseIndex := strings.LastIndex(tmpDeadline, ":")
+				tmpDate := strings.ReplaceAll(tmpDeadline[:dateParseIndex-1], ".", "-")
+				deadLine = tmpDate + "T" + tmpDeadline[timeParseIndex-2:]
 				tmpTodo := m.Todo{
 					ID:       tmpStr[splitStart+1 : splitEnd],
 					Name:     strings.ReplaceAll(strings.Trim(tmpName, (" \n\t")), ("\n                  "), " "),

@@ -45,10 +45,12 @@ func (e *Eclass) GetSubjects(ctx context.Context) ([]m.Subject, error) {
 		splitPoint := strings.Index(startAndRoom, "(")
 		endPoint := strings.Index(startAndRoom, ")")
 		if i > 1 && splitPoint != -1 {
-
+			tmpName := strings.ReplaceAll(strings.Trim(s.Find("em").Text(), (" \n\t")), ("\n                  "), " ")
+			parseIndex := strings.LastIndex(tmpName, "(")
+			tmpName = strings.Trim(tmpName[:parseIndex], " ")
 			tmpSubject := m.Subject{
 				ID:        s.Find("em").AttrOr("kj", " "),
-				Name:      strings.ReplaceAll(strings.Trim(s.Find("em").Text(), (" \n\t")), ("\n                  "), " "),
+				Name:      tmpName,
 				StartTime: strings.Trim(startAndRoom[:splitPoint], (" \n\t")),
 				Room:      startAndRoom[splitPoint+1 : endPoint],
 			}

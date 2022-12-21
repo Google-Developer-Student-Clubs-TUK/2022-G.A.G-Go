@@ -3,10 +3,22 @@ package handler
 import (
 	"log"
 	"net/http"
+	"strings"
 
 	"gag.com/model"
 	"gag.com/model/app"
 	"github.com/gin-gonic/gin"
+)
+
+type (
+	TodayRes struct {
+		ID        string `json:"id" gorm:"primaryKey"`
+		Name      string `json:"name"`
+		StartTime string `json:"startTime"`
+		EndTime   string `json:"endTime"`
+		IsPinned  bool   `json:"isPinned"`
+		Room      string `json:"room"`
+	}
 )
 
 func (h *Handler) GetTodaySubjects(c *gin.Context) {
@@ -29,15 +41,26 @@ func (h *Handler) GetTodaySubjects(c *gin.Context) {
 		})
 		return
 	}
-
-	todays := make([]model.Subject, 0)
+	tmpList := make([]TodayRes, 0)
 	for _, subject := range subjects {
 		if subject.IsToday() {
-			todays = append(todays, subject)
+			parseIndex := strings.LastIndex(subject.StartTime, "~")
+			startTime := subject.StartTime[parseIndex-5 : parseIndex]
+			endTime := subject.StartTime[parseIndex+1 : parseIndex+6]
+			tmp := &TodayRes{
+				ID:        subject.ID,
+				Name:      subject.Name,
+				StartTime: startTime,
+				EndTime:   endTime,
+				IsPinned:  subject.IsPinned,
+				Room:      subject.Room,
+			}
+
+			tmpList = append(tmpList, *tmp)
 		}
 	}
 
-	res := app.NewSuccess(todays)
+	res := app.NewSuccess(tmpList)
 
 	c.IndentedJSON(http.StatusOK, res)
 }
