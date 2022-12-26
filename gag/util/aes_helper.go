@@ -21,8 +21,9 @@ func AESEncrypt(src string, key []byte, iv []byte) []byte {
 	content = PKCS5Padding(content, block.BlockSize())
 	crypted := make([]byte, len(content))
 	cbc.CryptBlocks(crypted, content)
+	base64Encrypted := b64.StdEncoding.EncodeToString(crypted)
 
-	return crypted
+	return []byte(base64Encrypted)
 }
 
 func AESDecrypt(crypt string, key []byte, iv []byte) (string, error) {
