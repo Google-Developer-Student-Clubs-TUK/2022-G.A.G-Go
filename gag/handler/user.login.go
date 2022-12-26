@@ -21,7 +21,7 @@ type loginRes struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Major    string `json:"major"`
-	ImageURL string `json:"image_url"`
+	ImageURL string `json:"imageUrl"`
 }
 
 func (h *Handler) Login(c *gin.Context) {

@@ -14,7 +14,7 @@ func (s *userService) GetTodos(ctx context.Context, key string, u *model.User) (
 		return todos, err
 	}
 	fmt.Println("user find success")
-	err = s.EclassRepository.TestLogin(ctx, user)
+	err = s.EclassRepository.Login(ctx, key, user)
 	if err != nil {
 		return todos, err
 	}

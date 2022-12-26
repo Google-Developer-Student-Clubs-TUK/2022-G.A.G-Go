@@ -10,11 +10,13 @@ import (
 func (s *userService) GetSubjects(ctx context.Context, key string, u *model.User, sl []model.Subject) ([]model.Subject, error) {
 	user, err := s.UserRepository.FindByID(ctx, u.ID)
 	if err != nil {
+		fmt.Println(err)
 		return sl, err
 	}
-	fmt.Println("user find success")
-	err = s.EclassRepository.TestLogin(ctx, user)
+
+	err = s.EclassRepository.Login(ctx, key, user)
 	if err != nil {
+		fmt.Println(err)
 		return sl, err
 	}
 	fmt.Println("eclass login success")
