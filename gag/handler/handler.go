@@ -40,7 +40,7 @@ func NewHandler(c *Config) {
 			userGroup.POST("/profile", h.GetProfile)
 			userGroup.POST("/token", h.RefreshToken)
 		}
-		subjectGroup := v1.Group("/subject")
+		subjectGroup := v1.Group("/subjects")
 		{
 			subjectGroup.GET("/posts", h.GetPosts)
 			subjectGroup.POST("/posts", h.RegisterPost)

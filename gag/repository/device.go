@@ -18,7 +18,9 @@ func NewDeviceRepository(db *gorm.DB) model.DeviceRepository {
 }
 
 func (r DeviceRepository) Create(ctx context.Context, d *model.Device) error {
-	r.DB.Create(d)
+	if r.DB.Where("uuid = ?", d.UUID).First(d) == nil {
+		r.DB.Create(d)
+	}
 	return nil
 }
 

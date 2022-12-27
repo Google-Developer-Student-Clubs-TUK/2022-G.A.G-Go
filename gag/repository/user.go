@@ -18,7 +18,9 @@ func NewUserRepository(db *gorm.DB) model.UserRepository {
 }
 
 func (r UserRepository) Create(ctx context.Context, u *model.User) error {
-	r.DB.Create(u)
+	if r.DB.Where("id = ?", u.ID).First(u) == nil {
+		r.DB.Create(u)
+	}
 	return nil
 }
 
