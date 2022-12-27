@@ -11,22 +11,18 @@ import (
 )
 
 type getCommentsReq struct {
-	pid        string           `json:"pid"`
-	pagination model.Pagination `json:"pagination"`
+	pid string `json:"pid" form:"pid"`
 }
 
 type getCommentsRes struct {
-	Comments []model.Comment `json:"comments"`
+	pid      string          `json:"pid" form:"pid"`
+	Comments []model.Comment `json:"comments" form:"comments"`
 }
 
 func (h *Handler) GetComments(c *gin.Context) {
 	var req getCommentsReq
 	if ok := bindData(c, &req); !ok {
 		return
-	}
-
-	if req.pagination.PerPage == 0 {
-		req.pagination.PerPage = 10
 	}
 
 	pid, err := strconv.ParseUint(req.pid, 10, 32)
@@ -43,7 +39,11 @@ func (h *Handler) GetComments(c *gin.Context) {
 		return
 	}
 
-	res := app.NewSuccessPagination(comments, req.pagination)
+	var commentRes getCommentsRes
+	commentRes.pid = req.pid
+	commentRes.Comments = comments
+
+	res := app.NewSuccess(commentRes)
 
 	c.IndentedJSON(http.StatusOK, res)
 }

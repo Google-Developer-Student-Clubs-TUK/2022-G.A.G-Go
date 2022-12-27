@@ -10,12 +10,13 @@ import (
 )
 
 type getPostsReq struct {
-	sid        string           `json:"sid"`
-	pagination model.Pagination `json:"pagination"`
+	sid        string           `json:"sid" form": "sid"`
+	pagination model.Pagination `json:"pagination" form": "pagination"`
 }
 
 type getPostsRes struct {
-	Posts []model.Post `json:"posts"`
+	sid   string       `json:"sid" form": "sid"`
+	Posts []model.Post `json:"posts" form": "posts"`
 }
 
 func (h *Handler) GetPosts(c *gin.Context) {
@@ -37,7 +38,11 @@ func (h *Handler) GetPosts(c *gin.Context) {
 		return
 	}
 
-	res := app.NewSuccessPagination(posts, req.pagination)
+	var postRes getPostsRes
+	postRes.sid = req.sid
+	postRes.Posts = posts
+
+	res := app.NewSuccessPagination(postRes, req.pagination)
 
 	c.IndentedJSON(http.StatusOK, res)
 }
