@@ -13,12 +13,12 @@ type DeviceRepository struct {
 
 func NewDeviceRepository(db *gorm.DB) model.DeviceRepository {
 	return DeviceRepository{
-		DB: db,
+		DB: db.Table("devices"),
 	}
 }
 
 func (r DeviceRepository) Create(ctx context.Context, d *model.Device) error {
-	r.DB.Delete(d.UUID)
+	r.DB.Delete(d)
 	r.DB.Create(d)
 	return nil
 }
@@ -30,6 +30,6 @@ func (r DeviceRepository) FindByID(ctx context.Context, uuid string) (*model.Dev
 }
 
 func (r DeviceRepository) Delete(ctx context.Context, uuid string) error {
-	r.DB.Delete(uuid)
+	r.DB.Delete(&model.Device{}, uuid)
 	return nil
 }

@@ -13,12 +13,12 @@ type UserRepository struct {
 
 func NewUserRepository(db *gorm.DB) model.UserRepository {
 	return UserRepository{
-		DB: db,
+		DB: db.Table("users"),
 	}
 }
 
 func (r UserRepository) Create(ctx context.Context, u *model.User) error {
-	r.DB.Delete(u.ID)
+	r.DB.Delete(u)
 	r.DB.Create(u)
 	return nil
 }
@@ -31,17 +31,17 @@ func (r UserRepository) FindByID(ctx context.Context, id string) (*model.User, e
 
 func (r UserRepository) SetProfileVisibility(ctx context.Context, u *model.User) error {
 	u.IsProfileVisible = !u.IsProfileVisible
-	r.DB.Table("users").Where("id = ?", u.ID).Update("is_profile_visible", u.IsProfileVisible)
+	r.DB.Where("id = ?", u.ID).Update("is_profile_visible", u.IsProfileVisible)
 	return nil
 }
 
 func (r UserRepository) SetAlarm(ctx context.Context, u *model.User) error {
 	u.IsAlarm = !u.IsAlarm
-	r.DB.Table("users").Where("id = ?", u.ID).Update("is_alarm", u.IsAlarm)
+	r.DB.Where("id = ?", u.ID).Update("is_alarm", u.IsAlarm)
 	return nil
 }
 
 func (r UserRepository) SetToken(ctx context.Context, u *model.User) error {
-	r.DB.Table("users").Where("id = ?", u.ID).Update("token", u.Token)
+	r.DB.Where("id = ?", u.ID).Update("token", u.Token)
 	return nil
 }

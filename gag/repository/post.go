@@ -13,7 +13,7 @@ type PostRepository struct {
 
 func NewPostRepository(db *gorm.DB) model.PostRepository {
 	return PostRepository{
-		DB: db,
+		DB: db.Table("posts"),
 	}
 }
 

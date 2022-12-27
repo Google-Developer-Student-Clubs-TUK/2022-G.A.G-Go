@@ -13,7 +13,7 @@ type CommentRepository struct {
 
 func NewCommentRepository(db *gorm.DB) model.CommentRepository {
 	return CommentRepository{
-		DB: db,
+		DB: db.Table("comments"),
 	}
 }
 
