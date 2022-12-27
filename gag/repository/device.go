@@ -24,12 +24,12 @@ func (r DeviceRepository) Create(ctx context.Context, d *model.Device) error {
 }
 
 func (r DeviceRepository) FindByID(ctx context.Context, uuid string) (*model.Device, error) {
-	device := &model.Device{}
-	r.DB.First(device, "uuid = ?", uuid)
+	device := &model.Device{UUID: uuid}
+	r.DB.First(device)
 	return device, nil
 }
 
 func (r DeviceRepository) Delete(ctx context.Context, uuid string) error {
-	r.DB.Delete(&model.Device{}, uuid)
+	r.DB.Delete(&model.Device{})
 	return nil
 }

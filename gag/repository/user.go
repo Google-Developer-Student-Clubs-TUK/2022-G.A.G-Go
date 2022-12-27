@@ -24,8 +24,8 @@ func (r UserRepository) Create(ctx context.Context, u *model.User) error {
 }
 
 func (r UserRepository) FindByID(ctx context.Context, id string) (*model.User, error) {
-	user := &model.User{}
-	r.DB.First(user, "id = ?", id)
+	user := &model.User{ID: id}
+	r.DB.First(user)
 	return user, nil
 }
 

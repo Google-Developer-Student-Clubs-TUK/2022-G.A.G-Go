@@ -39,20 +39,21 @@ func (r PostRepository) FindBySubjectId(ctx context.Context, subjectId string, p
 	return posts, nil
 }
 
-func (r PostRepository) FindByPostId(ctx context.Context, pid string) (*model.Post, error) {
+func (r PostRepository) FindByPostId(ctx context.Context, pid uint) (*model.Post, error) {
 	post := &model.Post{}
-	r.DB.First(post, "id = ?", pid)
+	post.ID = pid
+	r.DB.First(post)
 	return post, nil
 }
 
 func (r PostRepository) Update(ctx context.Context, p *model.Post) error {
-	nowPost := &model.Post{}
-	r.DB.First(nowPost, "id = ?", p.ID)
-	r.DB.Model(nowPost).Updates(p)
+	r.DB.Where(p).Updates(p)
 	return nil
 }
 
 func (r PostRepository) Delete(ctx context.Context, pid uint) error {
-	r.DB.Delete(pid)
+	post := &model.Post{}
+	post.ID = pid
+	r.DB.Delete(post)
 	return nil
 }

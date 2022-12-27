@@ -29,20 +29,21 @@ func (r CommentRepository) FindByPid(ctx context.Context, pid uint) ([]model.Com
 	return comments, nil
 }
 
-func (r CommentRepository) FindByCid(ctx context.Context, cid string) (*model.Comment, error) {
+func (r CommentRepository) FindByCid(ctx context.Context, cid uint) (*model.Comment, error) {
 	comment := &model.Comment{}
-	r.DB.First(comment, "id = ?", cid)
+	comment.ID = cid
+	r.DB.First(comment)
 	return comment, nil
 }
 
 func (r CommentRepository) Update(ctx context.Context, c *model.Comment) error {
-	nowComment := &model.Comment{}
-	r.DB.First(nowComment, "id = ?", c.ID)
-	r.DB.Model(nowComment).Updates(c)
+	r.DB.Where(c).Updates(c)
 	return nil
 }
 
 func (r CommentRepository) Delete(ctx context.Context, cid uint) error {
-	r.DB.Delete(cid)
+	comment := &model.Comment{}
+	comment.ID = cid
+	r.DB.Delete(comment)
 	return nil
 }
