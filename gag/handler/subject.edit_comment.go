@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"gag.com/model"
 	"gag.com/model/app"
@@ -10,13 +9,12 @@ import (
 )
 
 type editCommentReq struct {
-	cid     string `json:"cid" form:"cid" binding: "required,cid"`
-	title   string `json:"title" form:"title" binding: "required,title"`
+	cid     int    `json:"cid" form:"cid" binding: "required,cid"`
 	content string `json:"content" form:"content" binding: "required,content"`
 }
 
 type eidtCommentRes struct {
-	cid string `json:"cid" form:"cid"`
+	cid int `json:"cid" form:"cid"`
 }
 
 func (h *Handler) EditComment(c *gin.Context) {
@@ -25,17 +23,12 @@ func (h *Handler) EditComment(c *gin.Context) {
 		return
 	}
 
-	pid, err := strconv.ParseUint(req.cid, 10, 32)
-	if err != nil {
-		return
-	}
-
 	comment := &model.Comment{
 		Content: req.content,
 	}
-	comment.ID = uint(pid)
+	comment.ID = uint(req.cid)
 
-	err = h.SubjectService.EditComment(c, comment)
+	err := h.SubjectService.EditComment(c, comment)
 	if err != nil {
 		c.JSON(app.Status(err), gin.H{
 			"error": err,

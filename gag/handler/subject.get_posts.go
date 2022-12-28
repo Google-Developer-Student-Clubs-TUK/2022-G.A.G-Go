@@ -16,7 +16,7 @@ type getPostsReq struct {
 
 type getPostsRes struct {
 	sid   string       `json:"sid" form": "sid"`
-	Posts []model.Post `json:"posts" form": "posts"`
+	posts []model.Post `json:"posts" form": "posts"`
 }
 
 func (h *Handler) GetPosts(c *gin.Context) {
@@ -40,7 +40,7 @@ func (h *Handler) GetPosts(c *gin.Context) {
 
 	var postRes getPostsRes
 	postRes.sid = req.sid
-	postRes.Posts = posts
+	postRes.posts = posts
 
 	res := app.NewSuccessPagination(postRes, req.pagination)
 

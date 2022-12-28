@@ -10,13 +10,13 @@ import (
 )
 
 type registerCommentReq struct {
-	uid     string `json:"uid" form:"uid" binding: "required,uid"`
-	pid     string `json:"pid" form:"pid" binding: "required,pid"`
+	pid     int    `json:"pid" form:"pid" binding: "required,pid"`
+	writer  int    `json:"writer" form:"writer" binding: "required,writer"`
 	content string `json:"content" form:"content" binding: "required,content"`
 }
 
 type registerCommentRes struct {
-	id uint `json:"cid" form:"cid" binding: "required,cid"`
+	cid int `json:"cid" form:"cid" binding: "required,cid"`
 }
 
 func (h *Handler) RegisterComment(c *gin.Context) {
@@ -26,8 +26,9 @@ func (h *Handler) RegisterComment(c *gin.Context) {
 	}
 
 	comment := &model.Comment{
-		Writer:  req.uid,
+		Writer:  req.writer,
 		Content: req.content,
+		PID:     uint(req.pid),
 	}
 
 	err := h.SubjectService.RegisterComment(c, comment)
@@ -40,7 +41,7 @@ func (h *Handler) RegisterComment(c *gin.Context) {
 	}
 
 	res := app.NewSuccess(registerCommentRes{
-		id: comment.ID,
+		cid: int(comment.ID),
 	})
 
 	c.IndentedJSON(http.StatusOK, res)

@@ -29,6 +29,7 @@ func inject(d *dataSources) (*gin.Engine, error) {
 		DeviceRepository: deviceRepository,
 		EclassRepository: eclassRepository,
 	})
+
 	subjectService := service.NewSubjectService(&service.SSConfig{
 		PostRepository:    postRepository,
 		CommentRepository: commentRepository,

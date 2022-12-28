@@ -28,7 +28,7 @@ func initDS() (*dataSources, error) {
 	db.AutoMigrate(&model.User{})
 	db.AutoMigrate(&model.Device{})
 	db.AutoMigrate(&model.Post{})
-	// db.AutoMigrate(&model.Comment{})
+	db.AutoMigrate(&model.Comment{})
 
 	// eclass 설정
 	ecl := &eclass.Eclass{}

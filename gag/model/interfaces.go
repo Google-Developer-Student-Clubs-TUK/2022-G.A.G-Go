@@ -49,9 +49,10 @@ type PostRepository interface {
 
 type CommentRepository interface {
 	Create(ctx context.Context, p *Comment) error
-	FindByPid(ctx context.Context, pid uint) ([]Comment, error)
+	FindByPid(ctx context.Context, cid uint) ([]Comment, error)
+	FindByCid(ctx context.Context, cid uint) (*Comment, error)
 	Update(ctx context.Context, p *Comment) error
-	Delete(ctx context.Context, pid uint) error
+	Delete(ctx context.Context, cid uint) error
 }
 
 type EclassRepository interface {
